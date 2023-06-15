@@ -6,7 +6,7 @@ type TaskProps = {
   isDone: boolean
 }
 
-export function Task({ title, id, isDone }: TaskProps) {
+export function Task({ title, isDone }: TaskProps) {
   return (
     <div className="task">
       <p className="taskTitle">{title}</p>
