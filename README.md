@@ -2,6 +2,6 @@
 -
 - Добавить фильтры "All", "Done", "Not done". Для создания кнопок фильтрации нужно использовать: 
  ```jsx
-<input type="checkbox" checked={isDone} />
+<input type="radio" checked={isDone} />
 ```
 - Реализовать возможность удаления таски из списка тасок
