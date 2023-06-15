@@ -7,4 +7,12 @@ module.exports = configure({
     presets.prettier(),
     presets.typescript(),
   ],
+  extend: {
+    rules: {
+      'react/react-in-jsx-scope': 'off',
+      '@typescript-eslint/consistent-type-definitions': 'off',
+      'unicorn/number-literal-case': 'off',
+      'no-case-declarations': 'off',
+    },
+  }
 })
