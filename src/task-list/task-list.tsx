@@ -16,12 +16,25 @@ export function TaskList() {
     { id: 3, title: 'Learn JS', isDone: true },
     { id: 4, title: 'Learn React', isDone: false },
   ])
+  function toggleTask(id: number) {
+    updateTasks(
+      tasks.map((task) =>
+        task.id === id ? { ...task, isDone: !task.isDone } : task,
+      ),
+    )
+  }
   return (
     <div className="taskList">
       <h1>Task list</h1>
       <div>
         {tasks.map(({ id, isDone, title }) => (
-          <TaskView key={id} isDone={isDone} id={id} title={title} />
+          <TaskView
+            key={id}
+            toggleTask={toggleTask}
+            isDone={isDone}
+            id={id}
+            title={title}
+          />
         ))}
       </div>
     </div>

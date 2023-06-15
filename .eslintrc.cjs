@@ -13,6 +13,7 @@ module.exports = configure({
       '@typescript-eslint/consistent-type-definitions': 'off',
       'unicorn/number-literal-case': 'off',
       'no-case-declarations': 'off',
+      'react/jsx-no-bind': 'off',
     },
   }
 })
