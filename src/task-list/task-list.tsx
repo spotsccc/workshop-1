@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Task as TaskView } from '../task/task'
 import './task-list.css'
 import { NewTaskForm } from '../new-task-form/new-task-form'
+import { Filter } from '../filter/filter'
 
 type Task = {
   title: string
@@ -17,6 +18,8 @@ export function TaskList() {
     { id: 3, title: 'Learn JS', isDone: true },
     { id: 4, title: 'Learn React', isDone: false },
   ])
+  const [filter, setFilter] = useState('')
+  const [filteredTasks, setFilteredTasks] = useState(tasks)
 
   function toggleTask(id: number) {
     updateTasks(
@@ -24,6 +27,21 @@ export function TaskList() {
         task.id === id ? { ...task, isDone: !task.isDone } : task,
       ),
     )
+  }
+
+  function setTasksFilter(type: string) {
+    setFilter(type)
+    updateFilteredTasks(type)
+  }
+
+  function updateFilteredTasks(type: string) {
+    let t = tasks
+
+    if (type !== "") {
+      t = tasks.filter((task) => type === "done" ? task.isDone : !task.isDone)
+    }
+
+    setFilteredTasks(t)
   }
 
   function createNewTask(title: string) {
@@ -40,8 +58,9 @@ export function TaskList() {
     <div className="taskList">
       <h1>Task list</h1>
       <NewTaskForm onCreateNewTask={createNewTask} />
+      <Filter onChange={setTasksFilter} filterType={filter}/>
       <div>
-        {tasks.map(({ id, isDone, title }) => (
+        {filteredTasks.map(({ id, isDone, title }) => (
           <TaskView
             key={id}
             toggleTask={toggleTask}
