@@ -4,22 +4,24 @@ import { Task as TaskView } from '../task/task'
 import { NewTaskForm } from '../new-task-form/new-task-form'
 import { Filter, TaskFilter } from '../task-filter/task-filter'
 import './task-list.css'
+import {TaskSort} from "../task-sort/task-sort";
 
 type Task = {
   title: string
   id: number
   isDone: boolean
-  priority: string
+  priority: number
 }
 
 export function TaskList() {
   const [tasks, updateTasks] = useState<Array<Task>>([
-    { id: 1, title: 'Prepare for workshop', isDone: true, priority: "low" },
-    { id: 2, title: 'Implement sorting', isDone: false, priority: "low" },
-    { id: 3, title: 'Learn JS', isDone: true, priority: "low" },
-    { id: 4, title: 'Learn React', isDone: false, priority: "low" },
+    { id: 1, title: 'Prepare for workshop', isDone: true, priority: 1 },
+    { id: 2, title: 'Implement sorting', isDone: false, priority: 1 },
+    { id: 3, title: 'Learn JS', isDone: true, priority: 1 },
+    { id: 4, title: 'Learn React', isDone: false, priority: 1 },
   ])
   const [filter, setFilter] = useState(Filter.all)
+  const [sort, setSort] = useState("asc")
 
   const filteredTasks = tasks.filter((task) => {
     switch (filter) {
@@ -31,6 +33,8 @@ export function TaskList() {
       default:
         return true
     }
+  }).sort((a,b) => {
+    return sort === 'asc' ? a.priority - b.priority : b.priority - a.priority
   })
 
   function toggleTask(id: number) {
@@ -50,7 +54,7 @@ export function TaskList() {
       title,
       id: tasks[tasks.length - 1].id + 1,
       isDone: false,
-      priority: "low"
+      priority: 1
     }
 
     updateTasks([...tasks, task])
@@ -64,7 +68,7 @@ export function TaskList() {
     )
   }
 
-  function setPriority(id: number, priority: string) {
+  function setPriority(id: number, priority: number) {
     updateTasks(
         tasks.map((task) =>
             task.id === id ? {...task, priority: priority} : task,
@@ -77,6 +81,7 @@ export function TaskList() {
       <h1>Task list</h1>
       <NewTaskForm onCreateNewTask={createNewTask} />
       <TaskFilter selectedFilter={filter} onFilterChange={setFilter} />
+      <TaskSort selectedSort={sort} onSortChange={setSort} />
       <div>
         {filteredTasks.map(({ id, isDone, title }) => (
           <TaskView
