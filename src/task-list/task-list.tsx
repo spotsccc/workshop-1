@@ -9,14 +9,15 @@ type Task = {
   title: string
   id: number
   isDone: boolean
+  priority: string
 }
 
 export function TaskList() {
   const [tasks, updateTasks] = useState<Array<Task>>([
-    { id: 1, title: 'Prepare for workshop', isDone: true },
-    { id: 2, title: 'Implement sorting', isDone: false },
-    { id: 3, title: 'Learn JS', isDone: true },
-    { id: 4, title: 'Learn React', isDone: false },
+    { id: 1, title: 'Prepare for workshop', isDone: true, priority: "low" },
+    { id: 2, title: 'Implement sorting', isDone: false, priority: "low" },
+    { id: 3, title: 'Learn JS', isDone: true, priority: "low" },
+    { id: 4, title: 'Learn React', isDone: false, priority: "low" },
   ])
   const [filter, setFilter] = useState(Filter.all)
 
@@ -49,6 +50,7 @@ export function TaskList() {
       title,
       id: tasks[tasks.length - 1].id + 1,
       isDone: false,
+      priority: "low"
     }
 
     updateTasks([...tasks, task])
@@ -58,6 +60,14 @@ export function TaskList() {
     updateTasks(
         tasks.map((task) =>
             task.id === id ? {...task, title: title} : task,
+        ),
+    )
+  }
+
+  function setPriority(id: number, priority: string) {
+    updateTasks(
+        tasks.map((task) =>
+            task.id === id ? {...task, priority: priority} : task,
         ),
     )
   }
@@ -74,6 +84,7 @@ export function TaskList() {
             deleteTask={deleteTask}
             toggleTask={toggleTask}
             editTitle={editTitle}
+            setPriority={setPriority}
             isDone={isDone}
             id={id}
             title={title}
