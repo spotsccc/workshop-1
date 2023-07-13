@@ -26,6 +26,10 @@ export function TaskList() {
     )
   }
 
+  function deleteTask(id: number) {
+    updateTasks(tasks.filter((task) => task.id !== id))
+  }
+
   function createNewTask(title: string) {
     const task: Task = {
       title,
@@ -44,6 +48,7 @@ export function TaskList() {
         {tasks.map(({ id, isDone, title }) => (
           <TaskView
             key={id}
+            deleteTask={deleteTask}
             toggleTask={toggleTask}
             isDone={isDone}
             id={id}

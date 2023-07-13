@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import './new-task-form.css'
+
 type NewTaskFormProps = {
   onCreateNewTask: (title: string) => void
 }
@@ -13,6 +15,7 @@ export function NewTaskForm({ onCreateNewTask }: NewTaskFormProps) {
 
   return (
     <form
+      className="form"
       onSubmit={(event) => {
         event.preventDefault()
         createNewTask()
