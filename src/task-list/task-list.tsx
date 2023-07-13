@@ -54,6 +54,14 @@ export function TaskList() {
     updateTasks([...tasks, task])
   }
 
+  function editTitle(id: number, title: string) {
+    updateTasks(
+        tasks.map((task) =>
+            task.id === id ? {...task, title: title} : task,
+        ),
+    )
+  }
+
   return (
     <div className="taskList">
       <h1>Task list</h1>
@@ -65,6 +73,7 @@ export function TaskList() {
             key={id}
             deleteTask={deleteTask}
             toggleTask={toggleTask}
+            editTitle={editTitle}
             isDone={isDone}
             id={id}
             title={title}
