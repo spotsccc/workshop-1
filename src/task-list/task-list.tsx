@@ -1,8 +1,9 @@
 import { useState } from 'react'
 
 import { Task as TaskView } from '../task/task'
-import './task-list.css'
 import { NewTaskForm } from '../new-task-form/new-task-form'
+import { Filter, TaskFilter } from '../task-filter/task-filter'
+import './task-list.css'
 
 type Task = {
   title: string
@@ -17,6 +18,19 @@ export function TaskList() {
     { id: 3, title: 'Learn JS', isDone: true },
     { id: 4, title: 'Learn React', isDone: false },
   ])
+  const [filter, setFilter] = useState(Filter.all)
+
+  const filteredTasks = tasks.filter((task) => {
+    switch (filter) {
+      case Filter.done:
+        return task.isDone
+      case Filter.notDone:
+        return !task.isDone
+      case Filter.all:
+      default:
+        return true
+    }
+  })
 
   function toggleTask(id: number) {
     updateTasks(
@@ -44,8 +58,9 @@ export function TaskList() {
     <div className="taskList">
       <h1>Task list</h1>
       <NewTaskForm onCreateNewTask={createNewTask} />
+      <TaskFilter selectedFilter={filter} onFilterChange={setFilter} />
       <div>
-        {tasks.map(({ id, isDone, title }) => (
+        {filteredTasks.map(({ id, isDone, title }) => (
           <TaskView
             key={id}
             deleteTask={deleteTask}
